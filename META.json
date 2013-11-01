@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's new $module",
+   "abstract" : "BackAPN Server",
    "author" : [
       "Hiroyuki Akabane <hirobanex@gmail.com>"
    ],
@@ -43,15 +43,34 @@
       },
       "runtime" : {
          "requires" : {
-            "perl" : "5.008005"
+            "OrePAN2" : "0.15",
+            "Plack" : "0",
+            "perl" : "5.008001"
          }
       },
       "test" : {
          "requires" : {
-            "Test::More" : "0.98"
+            "File::Which" : "0",
+            "HTTP::Request::Common" : "0",
+            "Test::More" : "0.98",
+            "Test::Output" : "1.02"
          }
       }
    },
    "release_status" : "unstable",
-   "version" : "0.01"
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/hirobanex/p5-OrePAN2-Server/issues"
+      },
+      "homepage" : "https://github.com/hirobanex/p5-OrePAN2-Server",
+      "repository" : {
+         "type" : "git",
+         "url" : "git://github.com/hirobanex/p5-OrePAN2-Server.git",
+         "web" : "https://github.com/hirobanex/p5-OrePAN2-Server"
+      }
+   },
+   "version" : "0.01",
+   "x_contributors" : [
+      "Songmu <y.songmu@gmail.com>"
+   ]
 }

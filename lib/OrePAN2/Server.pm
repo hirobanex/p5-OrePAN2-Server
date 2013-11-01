@@ -70,15 +70,23 @@ __END__
 
 =head1 NAME
 
-OrePAN2::Server - It's new $module
+OrePAN2::Server - BackAPN Server
 
 =head1 SYNOPSIS
 
-    use OrePAN2::Server;
+    % orepan2-server.pl
 
 =head1 DESCRIPTION
 
-OrePAN2::Server is ...
+OrePAN2::Server is BackPAN Server, or L<OrePAN2> uploader.
+
+Like uploading to cpan, you can upload to your orepan2 by http post request.
+
+If you set your BackPAN url in options(L<cpanm> --mirror, L<carton> PERL_CARTON_MIRROR env), you can easily install and manage your modules in your project.
+
+=head1 SEE ALSO
+
+L<orepan2-server.pl>, L<OrePAN2>, L<Minilla>
 
 =head1 LICENSE
 
@@ -90,6 +98,8 @@ it under the same terms as Perl itself.
 =head1 AUTHOR
 
 Hiroyuki Akabane E<lt>hirobanex@gmail.comE<gt>
+
+Songmu E<lt>y.songmu@gmail.comE<gt>
 
 =cut
 
