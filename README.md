@@ -1,18 +1,91 @@
 # NAME
 
-OrePAN2::Server - BackAPN Server
+OrePAN2::Server - DarkAPN Server
 
 # SYNOPSIS
 
-    % orepan2-server.pl
+    #launch orepan2 standalone server http://localhost:5888/
+    % orepan2-server.pl -p 5888
+
+    #upload git managed module to my orepan2 by curl 
+    curl --data-urlencode 'module=git@github.com:Songmu/p5-App-RunCron.git' --data-urlencode 'author=SONGMU' http://localhost:5888/
+
+    #install by cpanm
+    cpanm --mirror=http://localhost:5888/orepan Your::Module
+
+    #install by carton install
+    PERL_CARTON_MIRROR=http://localhost:5888/orepan carton install
 
 # DESCRIPTION
 
-OrePAN2::Server is BackPAN Server, or [OrePAN2](http://search.cpan.org/perldoc?OrePAN2) uploader.
+OrePAN2::Server is DarkPAN server, or [OrePAN2](http://search.cpan.org/perldoc?OrePAN2) uploader that use api interface provided by OrePAN2.
 
-Like uploading to cpan, you can upload to your orepan2 by http post request.
+Like uploading to cpan, you can upload to your DarkPAN by http post request.
 
-If you set your BackPAN url in options([cpanm](http://search.cpan.org/perldoc?cpanm) --mirror, [carton](http://search.cpan.org/perldoc?carton) PERL\_CARTON\_MIRROR env), you can easily install and manage your modules in your project.
+If you set your DarkPAN url in options([cpanm](http://search.cpan.org/perldoc?cpanm) --mirror, [carton](http://search.cpan.org/perldoc?carton) PERL\_CARTON\_MIRROR env), you can easily install and manage your modules in your project.
+
+# USAGE
+
+## launch OrePAN2 server instantly
+
+See [orepan2-server.pl](http://search.cpan.org/perldoc?orepan2-server.pl)
+
+## attach your plack app.
+
+    use Plack::Builder;
+    use OrePAN2::Server::CLI;
+    use Your::App;
+
+    my $orepan = OrePAN2::Server::CLI->new_with_options(
+        delivery_dir     => "orepan",
+        delivery_path    => "/",
+        authenquery_path => "/authenquery",
+        compress_index   => 1,
+    );
+
+    builder {
+        mount '/'       => Your::App->to_app();
+        mount '/orepan' => $orepan->app;
+    };
+
+If your need only DarkPAN uploader, you code this.
+
+    use Plack::Builder;
+    use OrePAN2::Server;
+    use Your::App;
+
+    my $orepan_uploader = OrePAN2::Server->uploader(
+        directory        => "orepan",
+        compress_index   => 1,
+    );
+
+    builder {
+        mount '/'            => Your::App->to_app();
+        mount '/authenquery' => $orepan_uploader;
+    };
+
+
+
+## upload by minil release.
+
+There is three step.
+
+### minil.toml
+
+    [release]
+    pause_config="/path/to/your-module/.pause"
+
+### /path/to/your-module/.pause
+
+    upload_uri http://orepan2-server/authenquery
+    user hirobanex
+    password dummy
+
+password is dummy.this feature is not officially documented in [CPAN::Uploader](http://search.cpan.org/perldoc?CPAN::Uploader).See [Minilla](http://search.cpan.org/perldoc?Minilla).
+
+### upload command
+
+minil release
 
 # SEE ALSO
 
