@@ -96,6 +96,8 @@ Like uploading to cpan, you can upload to your DarkPAN by http post request.
 
 If you set your DarkPAN url in options(L<cpanm> --mirror, L<carton>  PERL_CARTON_MIRROR), you can easily install and manage your modules in your project.
 
+You should set up DarkPAN in private space. If you upload your modules to DarkPAN setted on public space, you consider to upload your modules to cpan. 
+
 =head1 USAGE
 
 =head2 launch OrePAN2 server instantly
@@ -120,7 +122,7 @@ See L<orepan2-server.pl>
         mount '/orepan' => $orepan->app;
     };
 
-If your need only DarkPAN Uploader, you code this.
+If your need only DarkPAN Uploader and add Basic Auth with C<Plack::Middleware::Auth::Basic>, you code this.
 
     use Plack::Builder;
     use OrePAN2::Server;
@@ -133,7 +135,10 @@ If your need only DarkPAN Uploader, you code this.
 
     builder {
         mount '/'            => Your::App->to_app();
-        mount '/authenquery' => $orepan_uploader;
+        mount '/authenquery' => builder {
+            enable "Auth::Basic", authenticator => sub { return ($_[0] eq 'userid' && $_[1] eq 'password') };
+            $orepan_uploader;
+        }
     };
 
 
