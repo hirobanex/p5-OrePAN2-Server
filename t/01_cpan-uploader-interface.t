@@ -3,18 +3,19 @@ use warnings;
 use utf8;
 use Test::More;
 use Plack::Test;
-use Plack::Util;
 use File::Temp;
 use File::Zglob;
 use HTTP::Request::Common;
 use Test::Output;
+
+use OrePAN2::Server::CLI;
 
 my $OREPAN2_SERVER_DELIVERY_DIR = File::Temp::tempdir(CLEANUP => 1);
 $ENV{OREPAN2_SERVER_DELIVERY_DIR} = $OREPAN2_SERVER_DELIVERY_DIR;
 
 my $mock_tar_name = 'MockModule-0.01.tar.gz';
 
-my $app = Plack::Util::load_psgi 'script/orepan2-server.pl';
+my $app = OrePAN2::Server::CLI->new->app;
 
 test_psgi
     app    => $app,
