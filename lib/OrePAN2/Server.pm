@@ -72,7 +72,7 @@ __END__
 
 =head1 NAME
 
-OrePAN2::Server - DarkAPN Server
+OrePAN2::Server - DarkPAN Server
 
 =head1 SYNOPSIS
 
