@@ -90,11 +90,11 @@ OrePAN2::Server - DarkPAN Server
 
 =head1 DESCRIPTION
 
-OrePAN2::Server is DarkPAN server, or L<OrePAN2> uploader that use api interface provided by OrePAN2.
+OrePAN2::Server is DarkPAN server, or L<OrePAN2> Uploader that use API provided by OrePAN2.
 
 Like uploading to cpan, you can upload to your DarkPAN by http post request.
 
-If you set your DarkPAN url in options(L<cpanm> --mirror, L<carton> PERL_CARTON_MIRROR env), you can easily install and manage your modules in your project.
+If you set your DarkPAN url in options(L<cpanm> --mirror, L<carton>  PERL_CARTON_MIRROR), you can easily install and manage your modules in your project.
 
 =head1 USAGE
 
@@ -120,7 +120,7 @@ See L<orepan2-server.pl>
         mount '/orepan' => $orepan->app;
     };
 
-If your need only DarkPAN uploader, you code this.
+If your need only DarkPAN Uploader, you code this.
 
     use Plack::Builder;
     use OrePAN2::Server;
@@ -174,6 +174,8 @@ it under the same terms as Perl itself.
 Hiroyuki Akabane E<lt>hirobanex@gmail.comE<gt>
 
 Songmu E<lt>y.songmu@gmail.comE<gt>
+
+=for stopwords OrePAN DarkPAN
 
 =cut
 
