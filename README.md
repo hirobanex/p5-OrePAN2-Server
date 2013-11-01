@@ -1,6 +1,6 @@
 # NAME
 
-OrePAN2::Server - DarkAPN Server
+OrePAN2::Server - DarkPAN Server
 
 # SYNOPSIS
 

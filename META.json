@@ -1,5 +1,5 @@
 {
-   "abstract" : "DarkAPN Server",
+   "abstract" : "DarkPAN Server",
    "author" : [
       "Hiroyuki Akabane <hirobanex@gmail.com>"
    ],
@@ -69,7 +69,7 @@
          "web" : "https://github.com/hirobanex/p5-OrePAN2-Server"
       }
    },
-   "version" : "0.01",
+   "version" : "0.02",
    "x_contributors" : [
       "Songmu <y.songmu@gmail.com>"
    ]
