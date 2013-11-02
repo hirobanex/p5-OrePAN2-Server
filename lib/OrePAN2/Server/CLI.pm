@@ -17,7 +17,7 @@ sub new {
     my $class = shift;
     local @ARGV = @_;
 
-    my %opt = ('compress-index' => 0);
+    my %opt = ('compress-index' => 1);
     GetOptions(\%opt, qw/
         delivery-dir=s
         delivery-path=s
@@ -38,7 +38,6 @@ sub new {
     $class->new_with_options(%opt);
 }
 
-
 sub new_with_options {
     my $class = shift;
     bless {@_}, $class;
@@ -51,8 +50,8 @@ sub app {
         File::Path::mkpath $self->{delivery_dir};
         my $app = builder {
             mount $self->{authenquery_path} => OrePAN2::Server->uploader(
-                directory   => $self->{delivery_dir},
-                no_compress => !$self->{compress_index},
+                directory      => $self->{delivery_dir},
+                compress_index => $self->{compress_index},
             );
             mount $self->{delivery_path} => Plack::App::Directory->new({root=> $self->{delivery_dir}})->to_app;
         };

@@ -3,41 +3,37 @@ use warnings;
 use utf8;
 use Test::More;
 use Plack::Test;
-use Plack::Util;
 use File::Temp;
-use File::Zglob;
+use File::Which qw/which/;
 use HTTP::Request::Common;
 use Test::Output;
 
 use OrePAN2::Server::CLI;
 
-my $OREPAN2_SERVER_DELIVERY_DIR = File::Temp::tempdir(CLEANUP => 1);
-$ENV{OREPAN2_SERVER_DELIVERY_DIR} = $OREPAN2_SERVER_DELIVERY_DIR;
+my $git = which('git');
+my $tar = which('tar');
+unless ($git and $tar) {
+    plan skip_all => "This test depends on git and tar commands";
+}
 
-my $app = OrePAN2::Server::CLI->new->app;
+my $dir = File::Temp::tempdir(CLEANUP => 1);
+my $app = OrePAN2::Server::CLI->new("--delivery-dir=$dir", '--delivery-path=/orepan', '--no-compress-index')->app;
 
 test_psgi
     app    => $app,
     client => sub {
         my $cb = shift;
-
         subtest 'git interface' => sub {
-            plan skip_all =>  'this test is not Implementation because git stub method unkown. Perhaps see GitDDL test';
-
             my $res = $cb->(POST "http://localhost/authenquery",
                 Content      => +[
-                    module => 'git@github.com:Songmu/p5-App-RunCron.git',
+                    module => 'git@github.com:Songmu/p5-App-RunCron.git@0.03',
                 ],
             );
 
             is $res->code, 200, 'success request ?';
-            ok -f $OREPAN2_SERVER_DELIVERY_DIR."/modules/02packages.details.txt.gz", 'is there 02packages.details.txt.gz ?';
-
-            my @files = zglob($OREPAN2_SERVER_DELIVERY_DIR."/authors/**/*.tar.gz");
-
-            ok scalar @files, 'is there MockModule-0.01.tar.gz';
+            ok -f File::Spec->catfile($dir, qw/modules 02packages.details.txt/), 'is there 02packages.details.txt ?';
+            ok -f File::Spec->catfile($dir, qw/authors id D DU DUMMY/, 'App-RunCron-0.03.tar.gz'), 'tarball exixts';
         };
-
     };
 
 done_testing;
