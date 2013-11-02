@@ -14,7 +14,7 @@ use OrePAN2::Indexer;
 
 sub uploader {
     my ($class, %args) = @_;
-    my $directory      = $args{directory};
+    my $directory      = $args{directory} || 'orepan';
     my $compress_index = 1;
     $compress_index = $args{compress_index} if exists $args{compress_index};
 

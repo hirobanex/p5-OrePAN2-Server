@@ -26,7 +26,7 @@ sub new {
     /) or pod2usage(1);
 
     $opt{delivery_dir}     = delete $opt{'delivery-dir'}     || 'orepan';
-    $opt{delivery_path}    = delete $opt{'delliverry-path'}  || $opt{delivery_dir};
+    $opt{delivery_path}    = delete $opt{'delivery-path'}    || $opt{delivery_dir};
     $opt{authenquery_path} = delete $opt{'authenquery-path'} || 'authenquery';
     $opt{compress_index}   = delete $opt{'compress-index'};
 
