@@ -28,6 +28,7 @@ sub uploader {
 
                 my $tempdir = File::Temp::tempdir( CLEANUP => 1 );
                 if (my $upload = $req->upload('pause99_add_uri_httpupload')) {
+                    # request from CPAN::Uploader
                     $module = File::Spec->catfile($tempdir, $upload->filename);
                     File::Copy::move $upload->tempname, $module;
                     $author = $req->param('HIDDENNAME');
@@ -37,6 +38,7 @@ sub uploader {
                     $author = $req->param('author') || 'DUMMY';
                 }
                 return [404, [], ['NOT FOUND']] if !$module && !$author;
+                $author = uc $author;
 
                 my $injector = OrePAN2::Injector->new(
                     directory => $directory,
@@ -50,11 +52,12 @@ sub uploader {
             };
 
             if (my $err = $@) {
-                return [500, [], [$err.'']]
+                warn $err . '';
+                return [500, [], [$err.'']];
             }
         }
 
-        return [200, [], ['OK']]
+        return [200, [], ['OK']];
     }
 }
 
