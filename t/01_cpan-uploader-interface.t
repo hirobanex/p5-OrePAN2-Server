@@ -3,18 +3,16 @@ use warnings;
 use utf8;
 use Test::More;
 use Plack::Test;
-use Plack::Util;
 use File::Temp;
-use File::Zglob;
+use File::Spec;
 use HTTP::Request::Common;
 use Test::Output;
 
-my $OREPAN2_SERVER_DELIVERY_DIR = File::Temp::tempdir(CLEANUP => 1);
-$ENV{OREPAN2_SERVER_DELIVERY_DIR} = $OREPAN2_SERVER_DELIVERY_DIR;
+use OrePAN2::Server::CLI;
 
 my $mock_tar_name = 'MockModule-0.01.tar.gz';
-
-my $app = Plack::Util::load_psgi 'script/orepan2-server.pl';
+my $dir = File::Temp::tempdir(CLEANUP => 1);
+my $app = OrePAN2::Server::CLI->new("--delivery-dir=$dir", '--delivery-path=/orepan')->app;
 
 test_psgi
     app    => $app,
@@ -34,13 +32,9 @@ test_psgi
             } qr/Wrote/,'orepan inject ?';
 
             is $res->code, 200, 'success request ?';
-            ok -f $OREPAN2_SERVER_DELIVERY_DIR."/modules/02packages.details.txt.gz", 'is there 02packages.details.txt.gz ?';
-
-            my @files = zglob($OREPAN2_SERVER_DELIVERY_DIR."/authors/**/$mock_tar_name");
-
-            ok scalar @files, 'is there MockModule-0.01.tar.gz';
+            ok -f File::Spec->catfile($dir, qw/modules 02packages.details.txt.gz/), 'is there 02packages.details.txt.gz ?';
+            ok -f File::Spec->catfile($dir, qw/authors id H HI HIROBANEX/, $mock_tar_name), 'tarball exists';
         };
-
     };
 
 done_testing;
