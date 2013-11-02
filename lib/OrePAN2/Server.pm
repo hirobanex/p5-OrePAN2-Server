@@ -14,8 +14,9 @@ use OrePAN2::Indexer;
 
 sub uploader {
     my ($class, %args) = @_;
-    my $directory   = $args{directory};
-    my $no_compress = $args{no_compress};
+    my $directory      = $args{directory};
+    my $compress_index = 1;
+    $compress_index = $args{compress_index} if exists $args{compress_index};
 
     return sub {
         my $env = shift;
@@ -47,7 +48,7 @@ sub uploader {
                 $injector->inject($module);
 
                 OrePAN2::Indexer->new(directory => $directory)->make_index(
-                    no_compress => $no_compress,
+                    no_compress => !$compress_index,
                 );
             };
 

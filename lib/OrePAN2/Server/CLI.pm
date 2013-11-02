@@ -17,17 +17,18 @@ sub new {
     my $class = shift;
     local @ARGV = @_;
 
-    GetOptions(\my %opt, qw/
+    my %opt = ('compress-index' => 0);
+    GetOptions(\%opt, qw/
         delivery-dir=s
         delivery-path=s
         authenquery-path=s
-        compress-index
+        compress-index!
     /) or pod2usage(1);
 
     $opt{delivery_dir}     = delete $opt{'delivery-dir'}     || $ENV{OREPAN2_SERVER_DELIVERY_DIR}     || 'orepan';
     $opt{delivery_path}    = delete $opt{'delliverry-path'}  || $ENV{OREPAN2_SERVER_DELIVERY_PATH}    || $opt{delivery_dir};
     $opt{authenquery_path} = delete $opt{'authenquery-path'} || $ENV{OREPAN2_SERVER_AUTHENQUERY_PATH} || 'authenquery';
-    $opt{compress}         = delete $opt{'compress-index'};
+    $opt{compress_index}   = delete $opt{'compress-index'};
 
     for my $path (qw/delivery_path authenquery_path/) {
         $opt{$path} = '/' . $opt{$path} if $opt{$path} !~ m!^/!;
@@ -50,8 +51,8 @@ sub app {
         File::Path::mkpath $self->{delivery_dir};
         my $app = builder {
             mount $self->{authenquery_path} => OrePAN2::Server->uploader(
-                directory => $self->{delivery_dir},
-                no_index  => !$self->{compress},
+                directory   => $self->{delivery_dir},
+                no_compress => !$self->{compress_index},
             );
             mount $self->{delivery_path} => Plack::App::Directory->new({root=> $self->{delivery_dir}})->to_app;
         };
