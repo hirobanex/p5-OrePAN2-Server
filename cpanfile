@@ -1,17 +1,17 @@
 requires 'perl', '5.008001';
 
 requires 'Plack', '0';
-requires 'Plack::App::Directory', '0';
 requires 'OrePAN2', '0.15';
-requires 'Path::Class', '0.32';
+
+on configure => sub {
+    requires 'CPAN::Meta';
+    requires 'CPAN::Meta::Prereqs';
+    requires 'Module::Build';
+};
 
 on 'test' => sub {
+    requires 'HTTP::Request::Common';
     requires 'Test::More', '0.98';
     requires 'Test::Output', '1.02';
-    requires 'File::Zglob', '0.11';
+    requires 'File::Which';
 };
-
-on 'develop' => sub {
-    requires 'Test::Pretty', '0';
-};
-
