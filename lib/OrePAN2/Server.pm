@@ -20,6 +20,7 @@ sub uploader {
     return sub {
         my $env = shift;
         my $req = Plack::Request->new($env);
+        return [404, [], ['NOT FOUND']] if $req->path_info !~ m!\A/?\z!ms;
 
         if ($req->method eq 'POST') {
             eval {
