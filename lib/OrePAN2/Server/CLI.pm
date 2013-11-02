@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use utf8;
 
+use File::Basename ();
 use File::Path ();
 use Plack::App::Directory;
 use Plack::Builder;
@@ -26,7 +27,7 @@ sub new {
     /) or pod2usage(1);
 
     $opt{delivery_dir}     = delete $opt{'delivery-dir'}     || 'orepan';
-    $opt{delivery_path}    = delete $opt{'delivery-path'}    || $opt{delivery_dir};
+    $opt{delivery_path}    = delete $opt{'delivery-path'}    || File::Basename::basename($opt{delivery_dir});
     $opt{authenquery_path} = delete $opt{'authenquery-path'} || 'authenquery';
     $opt{compress_index}   = delete $opt{'compress-index'};
 
