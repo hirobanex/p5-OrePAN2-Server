@@ -147,7 +147,7 @@ If your need only DarkPAN Uploader and add Basic Auth with C<Plack::Middleware::
 
 =head2 upload by minil release.
 
-There is three step.
+There is three step.This feature is not officially documented in L<CPAN::Uploader>.See L<Minilla>.
 
 =head3 minil.toml
 
@@ -158,9 +158,8 @@ There is three step.
 
     upload_uri http://orepan2-server/authenquery
     user hirobanex
-    password dummy
+    password password
 
-password is dummy.this feature is not officially documented in L<CPAN::Uploader>.See L<Minilla>.
 
 =head3 upload command
 
