@@ -82,6 +82,8 @@ OrePAN2::Server - DarkPAN Server
 
     #upload git managed module to my orepan2 by curl 
     curl --data-urlencode 'module=git@github.com:Songmu/p5-App-RunCron.git' --data-urlencode 'author=SONGMU' http://localhost:5888/
+    curl --data-urlencode 'module=git+ssh://git@mygit/home/git/repos/MyModule.git' --data-urlencode 'author=SONGMU' http://localhost:5888/
+    curl --data-urlencode 'module=git+file:///home/hirobanex/project/MyModule.git' --data-urlencode 'author=SONGMU' http://localhost:5888/
 
     #install by cpanm
     cpanm --mirror=http://localhost:5888/orepan Your::Module
@@ -97,7 +99,7 @@ Like uploading to cpan, you can upload to your DarkPAN by http post request.
 
 If you set your DarkPAN url in options(L<cpanm> --mirror, L<carton>  PERL_CARTON_MIRROR), you can easily install and manage your modules in your project.
 
-You should set up DarkPAN in private space. If you upload your modules to DarkPAN setted on public space, you consider to upload your modules to cpan. 
+You should set up DarkPAN in private space. If you upload your modules to DarkPAN on public space, you consider to upload your modules to cpan. 
 
 =head1 USAGE
 

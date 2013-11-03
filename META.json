@@ -43,7 +43,7 @@
       },
       "runtime" : {
          "requires" : {
-            "OrePAN2" : "0.15",
+            "OrePAN2" : "0.16",
             "Plack" : "0",
             "perl" : "5.008001"
          }
@@ -51,6 +51,7 @@
       "test" : {
          "requires" : {
             "File::Which" : "0",
+            "File::pushd" : "0",
             "HTTP::Request::Common" : "0",
             "Test::More" : "0.98",
             "Test::Output" : "1.02"
