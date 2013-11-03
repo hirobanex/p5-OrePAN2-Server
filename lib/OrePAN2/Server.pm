@@ -125,6 +125,8 @@ See L<orepan2-server.pl>
         mount '/orepan' => $orepan->app;
     };
 
+=head2 attach your plack with Basic Auth
+
 If your need only DarkPAN Uploader and add Basic Auth with C<Plack::Middleware::Auth::Basic>, you code this.
 
     use Plack::Builder;
@@ -147,12 +149,14 @@ If your need only DarkPAN Uploader and add Basic Auth with C<Plack::Middleware::
 
 =head2 upload by minil release.
 
-There is three step.This feature is not officially documented in L<CPAN::Uploader>.See L<Minilla>.
+There is three step.
 
 =head3 minil.toml
 
     [release]
     pause_config="/path/to/your-module/.pause"
+
+If you want to know other options,  See L<Minilla>.
 
 =head3 /path/to/your-module/.pause
 
@@ -160,6 +164,9 @@ There is three step.This feature is not officially documented in L<CPAN::Uploade
     user hirobanex
     password password
 
+If you want to know other options,  See L<CPAN::Uploader>.
+
+You must pay attention to set your DarkPAN uri as upload_uri.If you don't, you will upload to cpan!
 
 =head3 upload command
 
