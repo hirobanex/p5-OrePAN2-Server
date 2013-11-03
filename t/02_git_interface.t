@@ -4,7 +4,7 @@ use utf8;
 use Test::More;
 use Plack::Test;
 use File::Temp;
-use Cwd::Guard  qw/cwd_guard/;
+use File::pushd qw/pushd/;
 use File::Which qw/which/;
 use HTTP::Request::Common;
 use Test::Output;
@@ -21,11 +21,11 @@ unless ($git and $tar) {
 my $mock_module = File::Spec->rel2abs('t/MockModule-0.01.tar.gz');
 my $gitrepo = File::Temp::tempdir(CLEANUP => 1);
 {
-    my $guard  = cwd_guard $gitrepo;
+    my $guard  = pushd $gitrepo;
     system ($tar, 'zxvf', $mock_module);
     $gitrepo = File::Spec->catfile($gitrepo, (<*>)[0]);
     {
-        my $guard2 = cwd_guard $gitrepo;
+        my $guard2 = pushd $gitrepo;
         system ($git, 'init');
         system ($git, 'add', '.');
         system ($git, 'commit', '-am', "it's a test");

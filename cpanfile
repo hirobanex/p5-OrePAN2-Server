@@ -13,6 +13,6 @@ on 'test' => sub {
     requires 'HTTP::Request::Common';
     requires 'Test::More', '0.98';
     requires 'Test::Output', '1.02';
+    requires 'File::pushd';
     requires 'File::Which';
-    requires 'Cwd::Guard';
 };
