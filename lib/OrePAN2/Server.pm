@@ -56,8 +56,9 @@ sub uploader {
                 warn $err . '';
                 return [500, [], [$err.'']];
             }
-        }else{
-            return [400,[],['Bad Request']];               
+        }
+        else {
+            return [405, [], ['Method Not Allowed']];
         }
 
         return [200, [], ['OK']];
