@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/hirobanex/p5-OrePAN2-Server.png?branch=master)](https://travis-ci.org/hirobanex/p5-OrePAN2-Server) [![Coverage Status](https://coveralls.io/repos/hirobanex/p5-OrePAN2-Server/badge.png?branch=master)](https://coveralls.io/r/hirobanex/p5-OrePAN2-Server?branch=master)
 # NAME
 
 OrePAN2::Server - DarkPAN Server

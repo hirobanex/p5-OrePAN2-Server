@@ -1,1 +1,2 @@
 name = "OrePAN2-Server"
+badges = ['travis', 'coveralls']  
