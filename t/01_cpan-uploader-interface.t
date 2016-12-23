@@ -6,7 +6,6 @@ use Plack::Test;
 use File::Temp;
 use File::Spec;
 use HTTP::Request::Common;
-use Test::Output;
 
 use OrePAN2::Server::CLI;
 
@@ -20,16 +19,13 @@ test_psgi
         my $cb = shift;
 
         subtest 'CPAN::Uploader interface' => sub {
-            my $res;
-            stdout_like {
-                $res = $cb->(POST "http://localhost/authenquery",
-                    Content_Type => 'form-data',
-                    Content      => +[
-                        HIDDENNAME                  => 'hirobanex',
-                        pause99_add_uri_httpupload  => ["./t/$mock_tar_name"]
-                    ],
-                );
-            } qr/Wrote/,'orepan inject ?';
+            my $res = $cb->(POST "http://localhost/authenquery",
+                Content_Type => 'form-data',
+                Content      => +[
+                    HIDDENNAME                  => 'hirobanex',
+                    pause99_add_uri_httpupload  => ["./t/$mock_tar_name"]
+                ],
+            );
 
             is $res->code, 200, 'success request ?';
             ok -f File::Spec->catfile($dir, qw/modules 02packages.details.txt.gz/), 'is there 02packages.details.txt.gz ?';
